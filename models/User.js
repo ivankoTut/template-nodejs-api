@@ -2,8 +2,10 @@
  * Created by user on 30.01.2017.
  */
 
-import mongoose,{ Schema } from 'mongoose';
+import mongoose from 'mongoose';
 import bcrypt from 'bcryptjs';
+
+const Schema = mongoose.Schema;
 
 const UserSchema = new Schema({
     login: { type: String , unique: true, lowercase: true, index:true },
@@ -16,11 +18,12 @@ UserSchema.pre("save" , async function (next) {
     }
     const salt = await bcrypt.genSalt(10);
 
-    this.password = bcrypt.hash(this.password,salt);
+    this.password = await bcrypt.hash(this.password,salt);
     next();
 });
 
-UserSchema.methods.comparePasswords = function (password) {
+UserSchema.methods.comparePassword = function (password) {
+    console.log(11111);
     return bcrypt.compare(password,this.password);
 };
 

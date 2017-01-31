@@ -10,7 +10,11 @@ import bluebird from 'bluebird';
 
 import config from './config';
 
+//routs
 import authRoute from './routs/Auth';
+
+//middleware
+import errorHandler from './middleware/errorHandler';
 
 const app = express();
 
@@ -40,3 +44,5 @@ app.use(session({
 
 
 app.use('/api',authRoute);
+
+app.use(errorHandler);
