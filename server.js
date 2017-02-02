@@ -15,6 +15,7 @@ import authRoute from './routs/Auth';
 
 //middleware
 import errorHandler from './middleware/errorHandler';
+import checkToken from './middleware/checkToken';
 
 const app = express();
 
@@ -44,5 +45,8 @@ app.use(session({
 
 
 app.use('/api',authRoute);
+app.get('/test',checkToken,(req,res)=>{
+    res.json('test');
+});
 
 app.use(errorHandler);
