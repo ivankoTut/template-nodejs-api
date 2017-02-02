@@ -12,6 +12,7 @@ import config from './config';
 
 //routs
 import authRoute from './routs/Auth';
+import userRoute from './routs/User';
 
 //middleware
 import errorHandler from './middleware/errorHandler';
@@ -34,7 +35,7 @@ app.listen( config.port , err => {
     console.log(`Server is run in port: ${config.port}`);
 });
 
-app.use(morgan('combined'));
+app.use(morgan('tiny'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(session({
@@ -45,8 +46,6 @@ app.use(session({
 
 
 app.use('/api',authRoute);
-app.get('/test',checkToken,(req,res)=>{
-    res.json('test');
-});
+app.use('/api',checkToken,userRoute);
 
 app.use(errorHandler);
